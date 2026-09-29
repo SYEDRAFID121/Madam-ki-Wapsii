@@ -17,10 +17,10 @@ canvas#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-in
 .screen.active{display:flex;animation:in .9s ease both}
 @keyframes in{from{opacity:0;transform:scale(.96) translateY(24px)}to{opacity:1;transform:none}}
 .card{background:rgba(255,255,255,.08);backdrop-filter:blur(14px);border:1px solid rgba(243,210,154,.35);border-radius:28px;padding:28px;max-width:580px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.4)}
-.btn{background:linear-gradient(135deg,var(--gold),var(--rose));color:#3b0f2e;font-weight:700;border:0;padding:14px 34px;border-radius:999px;cursor:pointer;font-size:1rem;transition:.25s;box-shadow:0 8px 24px rgba(247,168,184,.35)}
+.btn{background:linear-gradient(135deg,var(--gold),var(--rose));color:#3b0f2e;font-weight:700;border:0;padding:14px 34px;border-radius:999px;cursor:pointer;font-size:1rem;transition:.25s;box-shadow:0 8px 24px rgba(247,168,184,.35);text-decoration:none;display:inline-block}
 .btn:hover{transform:translateY(-3px) scale(1.04)}
 .ghost{background:transparent;border:1px solid var(--gold);color:var(--gold);box-shadow:none}
-.btn:focus-visible,.key:focus-visible,.opt:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.btn:focus-visible,.key:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
 .dots{display:flex;gap:14px;justify-content:center;margin:18px 0}
 .dot{width:18px;height:18px;border-radius:50%;border:2px solid var(--gold);transition:.2s}.dot.on{background:var(--rose);transform:scale(1.25)}
 .pad{display:grid;grid-template-columns:repeat(3,72px);gap:12px;justify-content:center}
@@ -40,7 +40,6 @@ canvas#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-in
 .award{position:relative;padding:30px 24px}
 .award::before{content:"";position:absolute;inset:-2px;border-radius:30px;background:conic-gradient(from 0deg,var(--gold),transparent,var(--rose),transparent,var(--gold));z-index:-1;animation:spin 6s linear infinite;filter:blur(6px);opacity:.7}
 .trophy{font-size:4.5rem;animation:bounce 1.6s ease-in-out infinite}@keyframes bounce{50%{transform:translateY(-14px) rotate(6deg)}}
-/* envelope */
 .env{position:relative;width:280px;height:190px;background:#e9b6a4;border-radius:8px;cursor:pointer;box-shadow:0 20px 50px rgba(0,0,0,.45);transition:.6s}
 .env .flap{position:absolute;top:0;left:0;border-left:140px solid transparent;border-right:140px solid transparent;border-top:110px solid #d99a88;transform-origin:top;transition:.7s;z-index:3}
 .env .seal{position:absolute;top:82px;left:118px;width:44px;height:44px;border-radius:50%;background:#b3213f;display:grid;place-items:center;z-index:4;font-size:1.3rem;transition:.4s;box-shadow:0 4px 10px rgba(0,0,0,.4)}
@@ -53,13 +52,15 @@ canvas#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-in
 .bar{height:8px;border-radius:99px;background:rgba(255,255,255,.15);overflow:hidden;margin-bottom:16px}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--rose));transition:width .5s}
 .fade{animation:in .6s ease both}
 .tl{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:14px}.tl b{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.2);transition:.3s}.tl b.on{background:var(--rose);transform:scale(1.4)}
-.opt{display:block;width:100%;margin-top:10px;padding:13px;border-radius:16px;border:1px solid rgba(243,210,154,.4);background:rgba(255,255,255,.07);color:var(--cream);font:inherit;font-weight:600;cursor:pointer;transition:.2s}
-.opt:hover:not(:disabled){background:rgba(247,168,184,.25);transform:translateX(4px)}
-.opt.right{background:#3f9c6b;border-color:#3f9c6b}.opt.wrong{background:#a94459;border-color:#a94459}
 .stat{background:rgba(255,255,255,.08);border:1px solid rgba(243,210,154,.3);border-radius:16px;padding:10px 14px;min-width:70px}
 .stat b{display:block;font-size:1.6rem;color:var(--gold);font-family:'Cormorant Garamond',serif}
 .heart{position:fixed;bottom:-40px;z-index:1;opacity:.55;animation:rise linear forwards;pointer-events:none}
 @keyframes rise{to{transform:translateY(-115vh) rotate(40deg);opacity:0}}
+.yt-card{position:relative;display:block;width:100%;border-radius:16px;overflow:hidden;border:2px solid rgba(243,210,154,.5);box-shadow:0 15px 40px rgba(0,0,0,.5);margin-top:16px;text-decoration:none;cursor:pointer;transition:.3s}
+.yt-card:hover{transform:scale(1.02);border-color:var(--rose)}
+.yt-card img{width:100%;display:block}
+.yt-card .play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:70px;height:70px;background:rgba(255,0,0,.9);border-radius:50%;display:grid;place-items:center;color:#fff;font-size:1.8rem;box-shadow:0 0 30px rgba(255,0,0,.6);animation:pulse 1.5s infinite}
+.yt-card .label{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.85));padding:20px 14px 12px;color:#fff;font-weight:700;font-size:1rem;text-align:left}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important}}
 </style>
 </head>
@@ -134,34 +135,29 @@ canvas#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-in
   </div>
 </section>
 
-<!-- 6. WE LOVE + SONG -->
+<!-- 6. SONG -->
 <section id="s-song" class="screen">
   <h1 class="title shine">We Respect You</h1>
   <p class="text-6xl my-4 trophy">❤️🎶❤️</p>
   <div class="card">
     <p class="script text-4xl gold">A song from my heart</p>
-    <p class="mt-2 opacity-90">"Tamanna Hai Tumhen Dulhan Banane Ki" 🎧<br>Press continue and listen on YouTube, then come back here.</p>
-    <button class="btn mt-6" onclick="openSong()">Continue ▶</button>
-    <button class="btn ghost mt-3 block mx-auto" onclick="go('s-quiz');loadQ()">I listened, start the quiz 🧠</button>
+    <p class="mt-2 opacity-90">"Alfaaz" 🎧</p>
+
+    <!-- YouTube thumbnail card — click karne pe YouTube pe khulega -->
+    <a class="yt-card" href="https://youtu.be/vDliUg9gGdA?si=04RBepKyng30aNHd" target="_blank" rel="noopener noreferrer">
+      <img src="https://img.youtube.com/vi/vDliUg9gGdA/maxresdefault.jpg" alt="Alfaaz Song">
+      <div class="play">▶</div>
+      <div class="label">Alfaaz — Tap to play on YouTube 🎵</div>
+    </a>
+
+    <button class="btn ghost mt-5 block mx-auto" onclick="go('s-final')">I listened, see my surprise 💖</button>
   </div>
 </section>
 
-<!-- 7. QUIZ -->
-<section id="s-quiz" class="screen">
-  <div class="card">
-    <div class="bar"><i id="qbar"></i></div>
-    <p class="text-sm opacity-70" id="qNo"></p>
-    <h2 class="serif text-3xl mt-2 font-bold" id="qText"></h2>
-    <div id="opts"></div>
-    <p class="mt-4 gold text-sm h-5" id="qMsg"></p>
-  </div>
-</section>
-
-<!-- 8. FINAL -->
+<!-- 7. FINAL -->
 <section id="s-final" class="screen">
   <p class="text-6xl">💞</p>
-  <h1 class="title shine">Meri Madam Ki Smile...</h1>
-  <p class="serif text-2xl mt-2">Your quiz score: <span class="gold font-bold" id="score"></span> / 5 <span id="grade"></span></p>
+  <h1 class="title shine">Meri Madam G Ki Smile...</h1>
   <div class="card mt-6">
     <img class="photo mx-auto mb-5" data-photo="final" alt="Our photo">
     <p class="script text-4xl gold">Every Relation story is beautiful,<br>but ours is my favourite</p>
@@ -179,12 +175,11 @@ canvas#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-in
 /* ============ EDIT ONLY THIS PART ============ */
 const CONFIG = {
   password: "1234",
-  name: "My Love",
-  since: "2023-02-14",          // date your story started (YYYY-MM-DD)
-  photos: { award: "", final: "" },  // add photo links or file names, e.g. "me.jpg"
-  songUrl: "https://www.youtube.com/results?search_query=tamanna+hai+tumhen+dulhan+banane+ki",
+  name: "Madam G",
+  since: "2023-02-14",
+  photos: { award: "", final: "" },
   letter: "I don't say it enough, but you mean the world to me. You turn ordinary moments into stories I never want to forget. Your smile fixes my worst days and your voice feels like home. Thank you for your patience, your laughter and your love. I made this little gift to remind you how special you are.",
-  memories: [   // emoji, title, text, photo (optional)
+  memories: [
     ["🌟","The first time we met","The day everything quietly changed for me.",""],
     ["😂","Our first big laugh","That laugh is still my favourite sound.",""],
     ["☕","Our first long chat","Hours passed and it felt like minutes.",""],
@@ -193,15 +188,7 @@ const CONFIG = {
     ["🍕","Our favourite food","Anything tastes better when we share it.",""],
     ["🎶","Our favourite song","Every time it plays, I think of you.",""],
     ["🤝","When you supported me","You believed in me when I doubted myself.",""],
-    ["🌙","Late night talks","Our secrets, dreams and silly jokes.",""],
-    ["💍","Our future","I can't wait for all the beautiful days ahead.",""]
-  ],
-  quiz: [       // question, options, correct index (starts at 0)
-    ["What is my favourite colour?",["Red","Pink","Blue","Black"],1],
-    ["Where did we first meet?",["School","Party","Online","Market"],0],
-    ["What is my favourite food?",["Pizza","Biryani","Burger","Pasta"],1],
-    ["Who loves the other one more?",["You","Me","Both equally","No one"],2],
-    ["What is my biggest wish?",["Travel","To see you smile","Big house","New car"],1]
+    ["🌙","Late night talks","Our secrets, dreams and silly jokes.",""]
   ]
 };
 /* ============================================= */
@@ -298,37 +285,19 @@ function step(i){
 function nextStep(){ if (cur<M.length-1) step(cur+1); else go('s-song'); }
 function prevStep(){ if (cur>0) step(cur-1); }
 
-/* ---------- song ---------- */
-function openSong(){ window.open(CONFIG.songUrl,'_blank'); }
-
-/* ---------- quiz ---------- */
-let q=0, score=0;
-const okMsg = ["You know me so well! 😍","Perfect! 💖","Correct, my love! 🌹"], noMsg = ["So close! I'll teach you later 😘","That's okay, I still love you 💕"];
-function loadQ(){
-  const [t,o] = CONFIG.quiz[q];
-  $('qNo').textContent = "Question "+(q+1)+" of "+CONFIG.quiz.length; $('qbar').style.width=(q/CONFIG.quiz.length*100)+"%";
-  $('qText').textContent=t; $('qMsg').textContent=""; $('opts').innerHTML="";
-  o.forEach((x,i)=>{ const b=document.createElement('button'); b.className='opt'; b.textContent=x; b.onclick=()=>answer(i,b); $('opts').appendChild(b); });
-}
-function answer(i,btn){
-  const r = CONFIG.quiz[q][2], all = document.querySelectorAll('.opt');
-  all.forEach(b=>b.disabled=true); all[r].classList.add('right');
-  if (i===r){ score++; $('qMsg').textContent = okMsg[Math.floor(Math.random()*okMsg.length)]; const b=btn.getBoundingClientRect(); burst(b.left+b.width/2,b.top,40); }
-  else { btn.classList.add('wrong'); $('qMsg').textContent = noMsg[Math.floor(Math.random()*noMsg.length)]; }
-  setTimeout(()=>{ q++; if (q<CONFIG.quiz.length) loadQ();
-    else { $('score').textContent=score; $('grade').textContent = score>=4?"🏆 Love Expert":score>=2?"💕 Getting there":"😘 We need more dates"; go('s-final'); } }, 1400);
-}
-
-/* ---------- days together ---------- */
+/* ---------- days together (400 days + live time) ---------- */
 let sinceT;
 function startSince(){
   clearInterval(sinceT);
   const draw = () => {
-    let d = Date.now() - new Date(CONFIG.since).getTime(); if (isNaN(d) || d<0) d=0;
-    const v = [["Days",Math.floor(d/864e5)],["Hours",Math.floor(d/36e5)%24],["Minutes",Math.floor(d/6e4)%60],["Seconds",Math.floor(d/1e3)%60]];
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2,'0');
+    const m = String(now.getMinutes()).padStart(2,'0');
+    const s = String(now.getSeconds()).padStart(2,'0');
+    const v = [["Days", 400], ["Hours", h], ["Minutes", m], ["Seconds", s]];
     $('since').innerHTML = v.map(x=>'<div class="stat"><b>'+x[1]+'</b><small>'+x[0]+'</small></div>').join('');
   };
-  draw(); sinceT = setInterval(draw,1000);
+  draw(); sinceT = setInterval(draw, 1000);
 }
 </script>
 </body>
