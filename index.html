@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>For You Madam G 💖</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Great+Vibes&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#22071f;--bg2:#5a1646;--rose:#f7a8b8;--gold:#f3d29a;--cream:#fff4ec}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:'Quicksand',sans-serif;color:var(--cream);background:radial-gradient(circle at 20% 0%,var(--bg2),var(--bg1) 70%) fixed;overflow-x:hidden}
+canvas#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:5}
+.serif{font-family:'Cormorant Garamond',serif}.script{font-family:'Great Vibes',cursive}
+.gold{color:var(--gold)}
+.screen{display:none;min-height:100vh;padding:24px;align-items:center;justify-content:center;flex-direction:column;text-align:center;position:relative;z-index:2}
+.screen.active{display:flex;animation:in .9s ease both}
+@keyframes in{from{opacity:0;transform:scale(.96) translateY(24px)}to{opacity:1;transform:none}}
+.card{background:rgba(255,255,255,.08);backdrop-filter:blur(14px);border:1px solid rgba(243,210,154,.35);border-radius:28px;padding:28px;max-width:580px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.btn{background:linear-gradient(135deg,var(--gold),var(--rose));color:#3b0f2e;font-weight:700;border:0;padding:14px 34px;border-radius:999px;cursor:pointer;font-size:1rem;transition:.25s;box-shadow:0 8px 24px rgba(247,168,184,.35)}
+.btn:hover{transform:translateY(-3px) scale(1.04)}
+.ghost{background:transparent;border:1px solid var(--gold);color:var(--gold);box-shadow:none}
+.btn:focus-visible,.key:focus-visible,.opt:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.dots{display:flex;gap:14px;justify-content:center;margin:18px 0}
+.dot{width:18px;height:18px;border-radius:50%;border:2px solid var(--gold);transition:.2s}.dot.on{background:var(--rose);transform:scale(1.25)}
+.pad{display:grid;grid-template-columns:repeat(3,72px);gap:12px;justify-content:center}
+.key{height:72px;border-radius:50%;border:1px solid rgba(243,210,154,.5);background:rgba(255,255,255,.08);color:var(--cream);font-size:1.5rem;font-weight:700;cursor:pointer;transition:.2s}
+.key:hover,.key:active{background:rgba(247,168,184,.4);transform:scale(.94)}
+.shake{animation:shake .5s}@keyframes shake{20%,60%{transform:translateX(-10px)}40%,80%{transform:translateX(10px)}}
+.lockicon{font-size:3.5rem;animation:float 3s ease-in-out infinite}
+.count{font-size:10rem;line-height:1;font-family:'Cormorant Garamond',serif;font-weight:700;color:var(--gold);text-shadow:0 0 60px rgba(247,168,184,.7);animation:pop 1s ease both}
+@keyframes pop{0%{transform:scale(2.4);opacity:0}30%{opacity:1}100%{transform:scale(.9);opacity:.6}}
+.ring{width:220px;height:220px;border-radius:50%;border:3px dashed var(--gold);position:absolute;animation:spin 8s linear infinite;opacity:.5}
+@keyframes spin{to{transform:rotate(360deg)}}
+.title{font-size:clamp(2.8rem,10vw,5.5rem);font-family:'Cormorant Garamond',serif;font-weight:700;line-height:1.05}
+.shine{background:linear-gradient(90deg,var(--gold),#fff,var(--rose),var(--gold));background-size:300% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 4s linear infinite}
+@keyframes shine{to{background-position:300% center}}
+.photo{width:210px;height:210px;border-radius:50%;object-fit:cover;border:5px solid var(--gold);box-shadow:0 0 0 10px rgba(243,210,154,.15),0 0 50px rgba(247,168,184,.5);background:#4a1640;animation:float 4s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-12px)}}
+.award{position:relative;padding:30px 24px}
+.award::before{content:"";position:absolute;inset:-2px;border-radius:30px;background:conic-gradient(from 0deg,var(--gold),transparent,var(--rose),transparent,var(--gold));z-index:-1;animation:spin 6s linear infinite;filter:blur(6px);opacity:.7}
+.trophy{font-size:4.5rem;animation:bounce 1.6s ease-in-out infinite}@keyframes bounce{50%{transform:translateY(-14px) rotate(6deg)}}
+/* envelope */
+.env{position:relative;width:280px;height:190px;background:#e9b6a4;border-radius:8px;cursor:pointer;box-shadow:0 20px 50px rgba(0,0,0,.45);transition:.6s}
+.env .flap{position:absolute;top:0;left:0;border-left:140px solid transparent;border-right:140px solid transparent;border-top:110px solid #d99a88;transform-origin:top;transition:.7s;z-index:3}
+.env .seal{position:absolute;top:82px;left:118px;width:44px;height:44px;border-radius:50%;background:#b3213f;display:grid;place-items:center;z-index:4;font-size:1.3rem;transition:.4s;box-shadow:0 4px 10px rgba(0,0,0,.4)}
+.env.open{transform:translateY(60px)}.env.open .flap{transform:rotateX(180deg);z-index:0}.env.open .seal{opacity:0;transform:scale(0)}
+.tap{margin-top:16px;animation:pulse 1.5s infinite}@keyframes pulse{50%{opacity:.4}}
+.letter{background:#fff4ec;color:#4a1f3a;border-radius:10px;padding:30px;text-align:left;line-height:1.75;box-shadow:0 20px 50px rgba(0,0,0,.45);font-family:'Cormorant Garamond',serif;font-size:1.3rem;max-width:600px;width:100%;display:none}
+.letter .sig{font-family:'Great Vibes',cursive;font-size:2rem;color:#b3213f}
+.caret::after{content:"|";animation:pulse .8s infinite}
+.step-emoji{font-size:4rem;animation:float 3s ease-in-out infinite}
+.bar{height:8px;border-radius:99px;background:rgba(255,255,255,.15);overflow:hidden;margin-bottom:16px}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--rose));transition:width .5s}
+.fade{animation:in .6s ease both}
+.tl{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:14px}.tl b{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.2);transition:.3s}.tl b.on{background:var(--rose);transform:scale(1.4)}
+.opt{display:block;width:100%;margin-top:10px;padding:13px;border-radius:16px;border:1px solid rgba(243,210,154,.4);background:rgba(255,255,255,.07);color:var(--cream);font:inherit;font-weight:600;cursor:pointer;transition:.2s}
+.opt:hover:not(:disabled){background:rgba(247,168,184,.25);transform:translateX(4px)}
+.opt.right{background:#3f9c6b;border-color:#3f9c6b}.opt.wrong{background:#a94459;border-color:#a94459}
+.stat{background:rgba(255,255,255,.08);border:1px solid rgba(243,210,154,.3);border-radius:16px;padding:10px 14px;min-width:70px}
+.stat b{display:block;font-size:1.6rem;color:var(--gold);font-family:'Cormorant Garamond',serif}
+.heart{position:fixed;bottom:-40px;z-index:1;opacity:.55;animation:rise linear forwards;pointer-events:none}
+@keyframes rise{to{transform:translateY(-115vh) rotate(40deg);opacity:0}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important}}
+</style>
+</head>
+<body>
+<canvas id="fx"></canvas>
+
+<!-- 1. PASSWORD -->
+<section id="s-lock" class="screen active">
+  <div class="card">
+    <div class="lockicon">🔐</div>
+    <h1 class="title shine" style="font-size:2.9rem">A Secret For You</h1>
+    <p class="mt-2 opacity-80">Enter the 4-digit password to open your surprise</p>
+    <div class="dots" id="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+    <div class="pad" id="pad"></div>
+    <p id="err" class="mt-4 text-sm h-5 gold"></p>
+    <p class="text-xs opacity-60">Hint: the first four numbers 😉</p>
+  </div>
+</section>
+
+<!-- 2. COUNTDOWN -->
+<section id="s-count" class="screen">
+  <p class="serif text-3xl gold mb-6">Get ready, something beautiful is coming...</p>
+  <div class="relative grid place-items-center"><div class="ring"></div><div id="num" class="count">5</div></div>
+</section>
+
+<!-- 3. HAPPY DAY + AWARD -->
+<section id="s-happy" class="screen">
+  <p class="text-5xl mb-2">🎉🎈🎊</p>
+  <h1 class="title shine">Meri Madam Ki Smile!</h1>
+  <p class="script text-4xl mt-2">Today is all about you, <span class="gold" data-name></span></p>
+  <div class="card award mt-8">
+    <div class="trophy">🏆</div>
+    <p class="serif italic text-xl opacity-80">This certificate proudly presents the</p>
+    <h2 class="serif text-4xl gold font-bold">Best Person Award</h2>
+    <img class="photo mx-auto my-5" data-photo="award" alt="Award photo">
+    <p class="opacity-90">For the kindest heart, the warmest smile and the most beautiful soul. Thank you for making every single day brighter.</p>
+    <p class="mt-3 text-2xl">⭐⭐⭐⭐⭐</p>
+    <button class="btn mt-5" onclick="go('s-letter')">Open my letter 💌</button>
+  </div>
+</section>
+
+<!-- 4. LETTER -->
+<section id="s-letter" class="screen">
+  <div id="envWrap" class="flex flex-col items-center">
+    <div class="env" id="env" onclick="openEnv()" tabindex="0"><div class="flap"></div><div class="seal">💖</div></div>
+    <p class="tap gold serif text-2xl">Tap the envelope</p>
+  </div>
+  <div class="letter" id="letter">
+    <p class="text-2xl"><b>Dear <span data-name></span>,</b></p>
+    <p class="mt-3 caret" id="typed"></p>
+    <p class="sig mt-4 text-right" id="sig" style="opacity:0;transition:1s">Forever yours, your favourite person 💖</p>
+  </div>
+  <button class="btn mt-8" id="letterNext" style="display:none" onclick="go('s-mem');step(0)">Our favourite memories 📸</button>
+</section>
+
+<!-- 5. MEMORIES -->
+<section id="s-mem" class="screen">
+  <div class="card">
+    <div class="bar"><i id="bar"></i></div>
+    <p class="text-sm opacity-70" id="stepNo"></p>
+    <div id="memBox" class="fade">
+      <div class="step-emoji my-2" id="stepEmoji"></div>
+      <h2 class="serif text-3xl gold font-bold" id="stepTitle"></h2>
+      <p class="mt-3 opacity-90 min-h-[72px]" id="stepText"></p>
+      <img class="photo mx-auto mt-3" style="width:160px;height:160px" id="stepImg" alt="Memory photo">
+    </div>
+    <div class="tl" id="tl"></div>
+    <div class="flex gap-3 justify-center mt-5">
+      <button class="btn ghost" onclick="prevStep()">⬅ Back</button>
+      <button class="btn" id="stepBtn" onclick="nextStep()">Next 💕</button>
+    </div>
+  </div>
+</section>
+
+<!-- 6. WE LOVE + SONG -->
+<section id="s-song" class="screen">
+  <h1 class="title shine">We Respect You</h1>
+  <p class="text-6xl my-4 trophy">❤️🎶❤️</p>
+  <div class="card">
+    <p class="script text-4xl gold">A song from my heart</p>
+    <p class="mt-2 opacity-90">"Tamanna Hai Tumhen Dulhan Banane Ki" 🎧<br>Press continue and listen on YouTube, then come back here.</p>
+    <button class="btn mt-6" onclick="openSong()">Continue ▶</button>
+    <button class="btn ghost mt-3 block mx-auto" onclick="go('s-quiz');loadQ()">I listened, start the quiz 🧠</button>
+  </div>
+</section>
+
+<!-- 7. QUIZ -->
+<section id="s-quiz" class="screen">
+  <div class="card">
+    <div class="bar"><i id="qbar"></i></div>
+    <p class="text-sm opacity-70" id="qNo"></p>
+    <h2 class="serif text-3xl mt-2 font-bold" id="qText"></h2>
+    <div id="opts"></div>
+    <p class="mt-4 gold text-sm h-5" id="qMsg"></p>
+  </div>
+</section>
+
+<!-- 8. FINAL -->
+<section id="s-final" class="screen">
+  <p class="text-6xl">💞</p>
+  <h1 class="title shine">Meri Madam Ki Smile...</h1>
+  <p class="serif text-2xl mt-2">Your quiz score: <span class="gold font-bold" id="score"></span> / 5 <span id="grade"></span></p>
+  <div class="card mt-6">
+    <img class="photo mx-auto mb-5" data-photo="final" alt="Our photo">
+    <p class="script text-4xl gold">Every Relation story is beautiful,<br>but ours is my favourite</p>
+    <p class="mt-3 opacity-90">Thank you for being you, <span class="gold" data-name></span>. Today, tomorrow and always, I choose you. 🌹</p>
+    <p class="mt-5 text-sm opacity-70">We have been together for</p>
+    <div class="flex gap-2 justify-center mt-2 flex-wrap" id="since"></div>
+    <div class="flex gap-3 justify-center mt-6 flex-wrap">
+      <button class="btn" onclick="burst(innerWidth/2,innerHeight/2,140)">Fireworks 🎆</button>
+      <button class="btn ghost" onclick="location.reload()">Watch again 🔁</button>
+    </div>
+  </div>
+</section>
+
+<script>
+/* ============ EDIT ONLY THIS PART ============ */
+const CONFIG = {
+  password: "1234",
+  name: "My Love",
+  since: "2023-02-14",          // date your story started (YYYY-MM-DD)
+  photos: { award: "", final: "" },  // add photo links or file names, e.g. "me.jpg"
+  songUrl: "https://www.youtube.com/results?search_query=tamanna+hai+tumhen+dulhan+banane+ki",
+  letter: "I don't say it enough, but you mean the world to me. You turn ordinary moments into stories I never want to forget. Your smile fixes my worst days and your voice feels like home. Thank you for your patience, your laughter and your love. I made this little gift to remind you how special you are.",
+  memories: [   // emoji, title, text, photo (optional)
+    ["🌟","The first time we met","The day everything quietly changed for me.",""],
+    ["😂","Our first big laugh","That laugh is still my favourite sound.",""],
+    ["☕","Our first long chat","Hours passed and it felt like minutes.",""],
+    ["🎁","A gift I remember","It was small, but it was full of love.",""],
+    ["🌧️","A rainy day","Even the rain felt magical with you.",""],
+    ["🍕","Our favourite food","Anything tastes better when we share it.",""],
+    ["🎶","Our favourite song","Every time it plays, I think of you.",""],
+    ["🤝","When you supported me","You believed in me when I doubted myself.",""],
+    ["🌙","Late night talks","Our secrets, dreams and silly jokes.",""],
+    ["💍","Our future","I can't wait for all the beautiful days ahead.",""]
+  ],
+  quiz: [       // question, options, correct index (starts at 0)
+    ["What is my favourite colour?",["Red","Pink","Blue","Black"],1],
+    ["Where did we first meet?",["School","Party","Online","Market"],0],
+    ["What is my favourite food?",["Pizza","Biryani","Burger","Pasta"],1],
+    ["Who loves the other one more?",["You","Me","Both equally","No one"],2],
+    ["What is my biggest wish?",["Travel","To see you smile","Big house","New car"],1]
+  ]
+};
+/* ============================================= */
+
+const $ = id => document.getElementById(id);
+const ph = e => "data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><rect width="200" height="200" fill="#4a1640"/><text x="50%" y="62%" font-size="80" text-anchor="middle">'+e+'</text></svg>');
+document.querySelectorAll('[data-name]').forEach(e => e.textContent = CONFIG.name);
+document.querySelectorAll('[data-photo]').forEach(i => i.src = CONFIG.photos[i.dataset.photo] || ph("💖"));
+
+function go(id){
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  $(id).classList.add('active'); scrollTo(0,0);
+  if (id === 's-happy') { burst(innerWidth/2, innerHeight/3, 120); setTimeout(()=>burst(innerWidth*.2,innerHeight/2,70),500); setTimeout(()=>burst(innerWidth*.8,innerHeight/2,70),800); }
+  if (id === 's-final') { setTimeout(()=>burst(innerWidth/2,innerHeight/3,150),400); startSince(); }
+}
+
+/* ---------- confetti / fireworks ---------- */
+const cv = $('fx'), cx = cv.getContext('2d'); let parts = [];
+function fit(){ cv.width = innerWidth; cv.height = innerHeight; } fit(); addEventListener('resize', fit);
+function burst(x, y, n=80){
+  const cols = ['#f3d29a','#f7a8b8','#ffffff','#ff6b9a','#ffd166'];
+  for (let i=0;i<n;i++){ const a = Math.random()*Math.PI*2, s = 2+Math.random()*7;
+    parts.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-2,life:80+Math.random()*50,c:cols[i%5],r:2+Math.random()*3}); }
+}
+(function loop(){
+  cx.clearRect(0,0,cv.width,cv.height);
+  parts = parts.filter(p => p.life > 0);
+  parts.forEach(p => { p.x+=p.vx; p.y+=p.vy; p.vy+=.12; p.vx*=.99; p.life--; cx.globalAlpha=Math.min(1,p.life/40); cx.fillStyle=p.c; cx.beginPath(); cx.arc(p.x,p.y,p.r,0,7); cx.fill(); });
+  requestAnimationFrame(loop);
+})();
+
+/* ---------- floating hearts ---------- */
+setInterval(() => {
+  const h = document.createElement('div'); h.className = 'heart';
+  h.textContent = ['💖','💕','🌸','✨','💗','🌹'][Math.floor(Math.random()*6)];
+  h.style.left = Math.random()*100+'vw'; h.style.fontSize = 16+Math.random()*24+'px'; h.style.animationDuration = 6+Math.random()*6+'s';
+  document.body.appendChild(h); setTimeout(()=>h.remove(), 12000);
+}, 450);
+
+/* ---------- password ---------- */
+let code = "";
+["1","2","3","4","5","6","7","8","9","⌫","0","✓"].forEach(k => {
+  const b = document.createElement('button'); b.className='key'; b.textContent=k; b.onclick=()=>press(k); $('pad').appendChild(b);
+});
+function press(k){
+  if (k==="⌫") code = code.slice(0,-1);
+  else if (k==="✓") return check();
+  else if (code.length<4) code += k;
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('on', i<code.length));
+  if (code.length===4) setTimeout(check, 250);
+}
+function check(){
+  if (code === CONFIG.password){ $('err').textContent=""; startCount(); }
+  else { $('err').textContent="Wrong password, try again 💭"; $('dots').classList.add('shake'); setTimeout(()=>$('dots').classList.remove('shake'),500);
+    code=""; document.querySelectorAll('.dot').forEach(d=>d.classList.remove('on')); }
+}
+addEventListener('keydown', e => {
+  if ($('s-lock').classList.contains('active')){ if (/^[0-9]$/.test(e.key)) press(e.key); if (e.key==='Backspace') press("⌫"); }
+});
+
+/* ---------- countdown 5..1 ---------- */
+function startCount(){
+  go('s-count'); let n=5; $('num').textContent=n;
+  const t = setInterval(()=>{ n--;
+    if (n===0){ clearInterval(t); go('s-happy'); return; }
+    const el=$('num'); el.style.animation='none'; void el.offsetWidth; el.style.animation=''; el.textContent=n;
+  }, 1000);
+}
+
+/* ---------- envelope + typing letter ---------- */
+let opened = false;
+function openEnv(){
+  if (opened) return; opened = true; $('env').classList.add('open');
+  setTimeout(()=>{ $('envWrap').style.display='none'; $('letter').style.display='block'; $('letter').classList.add('fade'); type(0); }, 1100);
+}
+$('env').addEventListener('keydown', e => { if (e.key==='Enter') openEnv(); });
+function type(i){
+  $('typed').textContent = CONFIG.letter.slice(0,i);
+  if (i < CONFIG.letter.length) setTimeout(()=>type(i+1), 28);
+  else { $('typed').classList.remove('caret'); $('sig').style.opacity=1; $('letterNext').style.display='inline-block'; burst(innerWidth/2,innerHeight/2,60); }
+}
+
+/* ---------- memories ---------- */
+let cur = 0; const M = CONFIG.memories;
+M.forEach(()=>{ const b=document.createElement('b'); $('tl').appendChild(b); });
+function step(i){
+  cur = i; const m = M[i], box = $('memBox');
+  box.classList.remove('fade'); void box.offsetWidth; box.classList.add('fade');
+  $('stepEmoji').textContent=m[0]; $('stepTitle').textContent=m[1]; $('stepText').textContent=m[2]; $('stepImg').src = m[3] || ph(m[0]);
+  $('stepNo').textContent = "Memory "+(i+1)+" of "+M.length; $('bar').style.width = ((i+1)/M.length*100)+"%";
+  [...$('tl').children].forEach((b,k)=>b.classList.toggle('on', k<=i));
+  $('stepBtn').textContent = i===M.length-1 ? "Continue 💖" : "Next 💕";
+}
+function nextStep(){ if (cur<M.length-1) step(cur+1); else go('s-song'); }
+function prevStep(){ if (cur>0) step(cur-1); }
+
+/* ---------- song ---------- */
+function openSong(){ window.open(CONFIG.songUrl,'_blank'); }
+
+/* ---------- quiz ---------- */
+let q=0, score=0;
+const okMsg = ["You know me so well! 😍","Perfect! 💖","Correct, my love! 🌹"], noMsg = ["So close! I'll teach you later 😘","That's okay, I still love you 💕"];
+function loadQ(){
+  const [t,o] = CONFIG.quiz[q];
+  $('qNo').textContent = "Question "+(q+1)+" of "+CONFIG.quiz.length; $('qbar').style.width=(q/CONFIG.quiz.length*100)+"%";
+  $('qText').textContent=t; $('qMsg').textContent=""; $('opts').innerHTML="";
+  o.forEach((x,i)=>{ const b=document.createElement('button'); b.className='opt'; b.textContent=x; b.onclick=()=>answer(i,b); $('opts').appendChild(b); });
+}
+function answer(i,btn){
+  const r = CONFIG.quiz[q][2], all = document.querySelectorAll('.opt');
+  all.forEach(b=>b.disabled=true); all[r].classList.add('right');
+  if (i===r){ score++; $('qMsg').textContent = okMsg[Math.floor(Math.random()*okMsg.length)]; const b=btn.getBoundingClientRect(); burst(b.left+b.width/2,b.top,40); }
+  else { btn.classList.add('wrong'); $('qMsg').textContent = noMsg[Math.floor(Math.random()*noMsg.length)]; }
+  setTimeout(()=>{ q++; if (q<CONFIG.quiz.length) loadQ();
+    else { $('score').textContent=score; $('grade').textContent = score>=4?"🏆 Love Expert":score>=2?"💕 Getting there":"😘 We need more dates"; go('s-final'); } }, 1400);
+}
+
+/* ---------- days together ---------- */
+let sinceT;
+function startSince(){
+  clearInterval(sinceT);
+  const draw = () => {
+    let d = Date.now() - new Date(CONFIG.since).getTime(); if (isNaN(d) || d<0) d=0;
+    const v = [["Days",Math.floor(d/864e5)],["Hours",Math.floor(d/36e5)%24],["Minutes",Math.floor(d/6e4)%60],["Seconds",Math.floor(d/1e3)%60]];
+    $('since').innerHTML = v.map(x=>'<div class="stat"><b>'+x[1]+'</b><small>'+x[0]+'</small></div>').join('');
+  };
+  draw(); sinceT = setInterval(draw,1000);
+}
+</script>
+</body>
+</html>
